@@ -4,15 +4,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules"; // Правильний імпорт для Swiper 10+
 import Link from "next/link";
-
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-}
+import { Movie } from "./MovieCard";
 
 interface MovieSliderProps {
   title: string;
