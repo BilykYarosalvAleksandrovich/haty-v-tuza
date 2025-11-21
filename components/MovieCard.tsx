@@ -1,40 +1,25 @@
-import Link from "next/link";
+'use client';
+import { useState } from 'react';
+import MovieModal from './MovieModal';
 
-export interface Movie {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-}
-
-interface MovieCardProps {
-  movie: Movie;
-}
-
-export default function MovieCard({ movie }: MovieCardProps) {
+export default function MovieCard({ movie }: { movie: any }) {
+  const [open, setOpen] = useState(false);
   return (
-    <Link href={`/movie/${movie.id}`}>
-      <div className="rounded-md overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
-        {movie.poster_path ? (
-          <img
-            src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-            alt={movie.title}
-            className="w-full h-auto"
-          />
-        ) : (
-          <div className="w-full h-[300px] bg-gray-700 flex items-center justify-center text-white">
-            {movie.title}
-          </div>
-        )}
-        <div className="p-2">
-          <h3 className="text-white font-semibold text-sm truncate">
-            {movie.title}
-          </h3>
-          <p className="text-yellow-400 text-xs">
-            ⭐ {movie.vote_average.toFixed(1)}
-          </p>
-        </div>
+    <>
+      <div
+        onClick={() => setOpen(true)}
+        className="cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl rounded overflow-hidden bg-gray-800"
+      >
+        <img
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w300${movie.poster_path}` : '/placeholder.png'}
+          alt={movie.title}
+          className="w-full h-auto object-cover"
+          draggable={false}
+        />
+        <div className="p-2 text-white text-sm truncate">{movie.title}</div>
       </div>
-    </Link>
+
+      {open && <MovieModal movieId={movie.id} onClose={() => setOpen(false)} />}
+    </>
   );
 }
